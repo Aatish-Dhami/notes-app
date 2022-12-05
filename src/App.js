@@ -19,7 +19,9 @@ export default function App() {
      *    into a real JS array.
      */
     
-    const [notes, setNotes] = React.useState(JSON.parse(localStorage.getItem("notes"))|| [])
+    const [notes, setNotes] = React.useState(
+      () => JSON.parse(localStorage.getItem("notes"))|| []
+      )
     const [currentNoteId, setCurrentNoteId] = React.useState(
         (notes[0] && notes[0].id) || ""
     )
