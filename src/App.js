@@ -40,12 +40,25 @@ export default function App() {
     }
     
     function updateNote(text) {
-        setNotes(oldNotes => oldNotes.map(oldNote => {
-            return oldNote.id === currentNoteId
-                ? { ...oldNote, body: text }
-                : oldNote
-        }
-        ))
+      const newArr = []
+      const isNote = (element) => element.id === currentNoteId;
+      newArr.push(notes[notes.findIndex(isNote)])
+      newArr[0].body = text
+      
+      for(let i = 0; i < notes.length; i++){
+          if(notes[i].id !== currentNoteId){
+              newArr.push(notes[i])
+          }
+      }
+      
+      setNotes(newArr)
+
+        // setNotes(oldNotes => oldNotes.map(oldNote => {
+        //     return oldNote.id === currentNoteId
+        //         ? { ...oldNote, body: text }
+        //         : oldNote
+        // }
+        // ))
     }
     
     function findCurrentNote() {
