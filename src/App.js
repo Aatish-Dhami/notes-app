@@ -40,19 +40,35 @@ export default function App() {
     }
     
     function updateNote(text) {
-      const newArr = []
-      const isNote = (element) => element.id === currentNoteId;
-      newArr.push(notes[notes.findIndex(isNote)])
-      newArr[0].body = text
-      
-      for(let i = 0; i < notes.length; i++){
-          if(notes[i].id !== currentNoteId){
-              newArr.push(notes[i])
-          }
-      }
-      
-      setNotes(newArr)
+      // Better code for rearranging
+      setNotes(oldNotes => {
+        const newArray = []
+        for(let i = 0; i < oldNotes.length; i++) {
+            const oldNote = oldNotes[i]
+            if(oldNote.id === currentNoteId) {
+                newArray.unshift({ ...oldNote, body: text })
+            } else {
+                newArray.push(oldNote)
+            }
+        }
+        return newArray
+    })
 
+      // My code for rearranging
+      // const newArr = []
+      // const isNote = (element) => element.id === currentNoteId;
+      // newArr.push(notes[notes.findIndex(isNote)])
+      // newArr[0].body = text
+      
+      // for(let i = 0; i < notes.length; i++){
+      //     if(notes[i].id !== currentNoteId){
+      //         newArr.push(notes[i])
+      //     }
+      // }
+      
+      // setNotes(newArr)
+
+      // Does not rearrange
         // setNotes(oldNotes => oldNotes.map(oldNote => {
         //     return oldNote.id === currentNoteId
         //         ? { ...oldNote, body: text }
